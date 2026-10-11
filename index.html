@@ -1,0 +1,840 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0912">
+<title>LISTS — Knowledge, Organized.</title><style>
+:root {
+  --bg: #0b0912;
+  --panel: #14111f;
+  --panel2: #1c172b;
+  --purple: #9b72ff;
+  --text: #f4f0ff;
+  --muted: #a49bb8;
+  --border: #30263f;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, sans-serif;
+  line-height: 1.5;
+}
+
+header {
+  padding: 24px 6%;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.logo {
+  font-size: 25px;
+  font-weight: 900;
+  letter-spacing: 4px;
+}
+
+.logo span {
+  color: var(--purple);
+}
+
+.tag {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+main {
+  width: min(1100px, 90%);
+  margin: auto;
+}
+
+.hero {
+  padding: 55px 0 30px;
+}
+
+.eyebrow {
+  color: var(--purple);
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 3px;
+}
+
+h1 {
+  font-size: clamp(36px, 7vw, 65px);
+  line-height: 1.05;
+  margin: 16px 0;
+  letter-spacing: -2px;
+}
+
+h1 span {
+  color: var(--purple);
+}
+
+.hero p {
+  color: var(--muted);
+  max-width: 530px;
+}
+
+.searchbox {
+  display: flex;
+  margin-top: 28px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 5px;
+}
+
+.searchbox input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: 0;
+  outline: none;
+  padding: 13px;
+  color: white;
+  font-size: 15px;
+}
+
+.searchbox button,
+.primary {
+  background: var(--purple);
+  color: #10091c;
+  border: 0;
+  border-radius: 8px;
+  padding: 12px 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+nav {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+nav button {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  border-radius: 20px;
+  padding: 9px 15px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+nav button.active,
+nav button:hover {
+  background: var(--panel2);
+  color: var(--text);
+  border-color: var(--purple);
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin: 32px 0 18px;
+}
+
+.section-heading h2 {
+  font-size: 21px;
+  margin: 0;
+}
+
+.section-heading span {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 15px;
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  padding: 22px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.card:hover {
+  border-color: var(--purple);
+  transform: translateY(-3px);
+}
+
+.icon {
+  font-size: 25px;
+}
+
+.card h3 {
+  margin: 14px 0 6px;
+}
+
+.card p {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0;
+}
+
+.count {
+  display: inline-block;
+  margin-top: 18px;
+  font-size: 11px;
+  color: var(--purple);
+  letter-spacing: 1px;
+}
+
+#results {
+  padding-bottom: 50px;
+}
+
+.list-item {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.item-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px;
+  cursor: pointer;
+}
+
+.item-head strong {
+  flex: 1;
+}
+
+.arrow {
+  color: var(--purple);
+}
+
+.item-body {
+  padding: 0 16px 16px 42px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.item-body ul {
+  padding-left: 20px;
+}
+
+.item-body li {
+  margin: 8px 0;
+}
+
+.item-body li strong {
+  color: var(--text);
+}
+
+.item-body li p {
+  margin: 3px 0;
+}
+
+.save {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--muted);
+  padding: 5px 8px;
+  cursor: pointer;
+}
+
+.save.saved {
+  color: var(--purple);
+  border-color: var(--purple);
+}
+
+.empty {
+  color: var(--muted);
+  padding: 25px 0;
+}
+
+footer {
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 25px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+@media (max-width: 500px) {
+  header {
+    padding: 20px 5%;
+  }
+
+  .tag {
+    max-width: 100px;
+    text-align: right;
+  }
+
+  main {
+    width: 90%;
+  }
+
+  .hero {
+    padding-top: 40px;
+  }
+
+  .searchbox button {
+    padding: 10px;
+  }
+}
+</style></head><body><header>
+  <div class="logo">LIST<span>S</span></div>
+  <div class="tag">KNOWLEDGE, ORGANIZED.</div>
+</header><main><section class="hero" id="hero">
+  <div class="eyebrow">YOUR KNOWLEDGE LIBRARY</div>
+  <h1>Everything has<br>a <span>place.</span></h1>
+  <p>
+    Explore the people, systems, disciplines, technologies
+    and ideas that shape our world.
+  </p>  <form class="searchbox" id="searchForm">
+    <input id="search" type="search"
+      placeholder="Search anything..."
+      aria-label="Search lists">
+    <button type="submit">Search</button>
+  </form>
+</section><nav id="nav">
+  <button class="active" data-view="home">Home</button>
+  <button data-view="all">All Lists</button>
+  <button data-view="Engineering">Engineering</button>
+  <button data-view="Technology">Technology</button>
+  <button data-view="People">People</button>
+  <button data-view="Infrastructure">Infrastructure</button>
+  <button data-view="saved">Saved</button>
+</nav><section id="homeView">
+  <div class="section-heading">
+    <h2>Explore categories</h2>
+    <span>START HERE</span>
+  </div>
+  <div class="grid" id="categories"></div>
+</section><section id="listView" class="hidden">
+  <div class="section-heading">
+    <h2 id="listTitle">All Lists</h2>
+    <span id="listCount"></span>
+  </div>
+  <div id="results"></div>
+</section></main><footer>
+  LISTS · A growing map of knowledge.
+</footer><script>
+const database = [
+  {
+    id: "engineering",
+    category: "Engineering",
+    icon: "⚙️",
+    title: "Types of Engineering",
+    description: "Engineering disciplines and their specializations.",
+    items: [
+      {
+        name: "Civil Engineering",
+        children: [
+          "Structural Engineering",
+          "Geotechnical Engineering",
+          "Transportation Engineering",
+          "Water Resources Engineering",
+          "Environmental Engineering",
+          "Construction Engineering"
+        ]
+      },
+      {
+        name: "Electrical Engineering",
+        children: [
+          "Power Engineering",
+          "Electronics Engineering",
+          "Control Engineering",
+          "Telecommunications Engineering",
+          "Signal Processing"
+        ]
+      },
+      {
+        name: "Mechanical Engineering",
+        children: [
+          "Thermal Engineering",
+          "Fluid Mechanics",
+          "Robotics",
+          "Manufacturing Engineering",
+          "Automotive Engineering"
+        ]
+      },
+      {
+        name: "Chemical Engineering",
+        children: [
+          "Process Engineering",
+          "Petroleum Refining",
+          "Biochemical Engineering",
+          "Materials Processing"
+        ]
+      },
+      {
+        name: "Computer Engineering",
+        children: [
+          "Computer Hardware",
+          "Embedded Systems",
+          "Computer Architecture",
+          "Digital Systems"
+        ]
+      },
+      {
+        name: "Other Disciplines",
+        children: [
+          "Aerospace Engineering",
+          "Biomedical Engineering",
+          "Petroleum Engineering",
+          "Nuclear Engineering",
+          "Agricultural Engineering",
+          "Materials Engineering",
+          "Mining Engineering",
+          "Mechatronics Engineering"
+        ]
+      }
+    ]
+  },
+
+  {
+    id: "musk",
+    category: "People",
+    icon: "🚀",
+    title: "Elon Musk's Companies and Projects",
+    description: "Companies and major ventures associated with Elon Musk.",
+    items: [
+      {
+        name: "Space and Transportation",
+        children: [
+          "SpaceX — Space launch and spacecraft",
+          "Starlink — Satellite internet",
+          "Tesla — Electric vehicles and energy",
+          "The Boring Company — Tunnelling"
+        ]
+      },
+      {
+        name: "Artificial Intelligence",
+        children: [
+          "xAI — Artificial intelligence",
+          "Grok — AI assistant and model family"
+        ]
+      },
+      {
+        name: "Neurotechnology",
+        children: [
+          "Neuralink — Brain-computer interfaces"
+        ]
+      },
+      {
+        name: "Other Ventures and Projects",
+        children: [
+          "X — Social media platform",
+          "Hyperloop — Proposed high-speed transport concept",
+          "Tesla Optimus — Humanoid robotics"
+        ]
+      }
+    ]
+  },
+
+  {
+    id: "technology",
+    category: "Technology",
+    icon: "💻",
+    title: "Technology Industries",
+    description: "Major fields powering the modern technological world.",
+    items: [
+      {
+        name: "Computing",
+        children: [
+          "Computer Hardware",
+          "Software Engineering",
+          "Cloud Computing",
+          "High-Performance Computing",
+          "Quantum Computing"
+        ]
+      },
+      {
+        name: "Semiconductors",
+        children: [
+          "Chip Design",
+          "Wafer Fabrication",
+          "Lithography",
+          "Packaging and Testing",
+          "Semiconductor Equipment"
+        ]
+      },
+      {
+        name: "Artificial Intelligence",
+        children: [
+          "Machine Learning",
+          "Deep Learning",
+          "Natural Language Processing",
+          "Computer Vision",
+          "Robotics"
+        ]
+      },
+      {
+        name: "Communications",
+        children: [
+          "Fiber Optics",
+          "Mobile Networks",
+          "Satellite Communications",
+          "Internet Infrastructure"
+        ]
+      }
+    ]
+  },
+
+  {
+    id: "infrastructure",
+    category: "Infrastructure",
+    icon: "🏙️",
+    title: "Components of a Modern City",
+    description: "The systems a city needs to function and grow.",
+    items: [
+      {
+        name: "Essential Utilities",
+        children: [
+          "Electricity Generation and Distribution",
+          "Water Supply",
+          "Sewage and Sanitation",
+          "Waste Management",
+          "Telecommunications"
+        ]
+      },
+      {
+        name: "Transportation",
+        children: [
+          "Roads and Bridges",
+          "Railways",
+          "Public Transit",
+          "Airports",
+          "Ports",
+          "Pedestrian and Cycling Networks"
+        ]
+      },
+      {
+        name: "Built Environment",
+        children: [
+          "Housing",
+          "Commercial Buildings",
+          "Industrial Facilities",
+          "Schools",
+          "Hospitals"
+        ]
+      },
+      {
+        name: "Economic and Civic Systems",
+        children: [
+          "Markets and Business Districts",
+          "Financial Institutions",
+          "Public Administration",
+          "Emergency Services",
+          "Parks and Public Spaces"
+        ]
+      }
+    ]
+  },
+
+  {
+    id: "energy",
+    category: "Energy",
+    icon: "⚡",
+    title: "Types of Energy Sources",
+    description: "Major sources used to generate useful energy.",
+    items: [
+      {
+        name: "Renewable Sources",
+        children: [
+          "Solar",
+          "Wind",
+          "Hydroelectric",
+          "Geothermal",
+          "Tidal and Wave",
+          "Biomass"
+        ]
+      },
+      {
+        name: "Non-Renewable Sources",
+        children: [
+          "Coal",
+          "Petroleum",
+          "Natural Gas",
+          "Nuclear Fission"
+        ]
+      },
+      {
+        name: "Energy Systems",
+        children: [
+          "Power Generation",
+          "Electricity Transmission",
+          "Electricity Distribution",
+          "Battery Storage",
+          "Smart Grids"
+        ]
+      }
+    ]
+  },
+
+  {
+    id: "education",
+    category: "Education",
+    icon: "📚",
+    title: "Fields of Knowledge",
+    description: "A starting map of major academic disciplines.",
+    items: [
+      {
+        name: "Natural Sciences",
+        children: [
+          "Physics",
+          "Chemistry",
+          "Biology",
+          "Earth Science",
+          "Astronomy"
+        ]
+      },
+      {
+        name: "Formal Sciences",
+        children: [
+          "Mathematics",
+          "Statistics",
+          "Logic",
+          "Computer Science"
+        ]
+      },
+      {
+        name: "Social Sciences",
+        children: [
+          "Economics",
+          "Psychology",
+          "Sociology",
+          "Political Science",
+          "Anthropology"
+        ]
+      },
+      {
+        name: "Humanities",
+        children: [
+          "History",
+          "Philosophy",
+          "Literature",
+          "Languages",
+          "Art History"
+        ]
+      }
+    ]
+  }
+];
+
+const categories = document.getElementById("categories");
+const homeView = document.getElementById("homeView");
+const listView = document.getElementById("listView");
+const results = document.getElementById("results");
+const listTitle = document.getElementById("listTitle");
+const listCount = document.getElementById("listCount");
+const searchInput = document.getElementById("search");
+
+let currentView = "home";
+let currentQuery = "";
+
+let saved = JSON.parse(
+  localStorage.getItem("lists-saved") || "[]"
+);
+
+function saveData() {
+  localStorage.setItem("lists-saved", JSON.stringify(saved));
+}
+
+function searchable(list) {
+  return [
+    list.category,
+    list.title,
+    list.description,
+    ...list.items.flatMap(item => [
+      item.name,
+      ...item.children
+    ])
+  ].join(" ").toLowerCase();
+}
+
+function renderCategories() {
+  categories.innerHTML = database.map(list => `
+    <article class="card" data-open="${list.id}">
+      <div class="icon">${list.icon}</div>
+      <h3>${list.category}</h3>
+      <p>${list.description}</p>
+      <span class="count">${list.items.length} MAIN GROUPS →</span>
+    </article>
+  `).join("");
+}
+
+function showView(view, query = "") {
+  currentView = view;
+  currentQuery = query;
+
+  homeView.classList.toggle(
+    "hidden", view !== "home" || !!query
+  );
+
+  listView.classList.toggle(
+    "hidden", view === "home" && !query
+  );
+
+  document.querySelectorAll("#nav button").forEach(btn => {
+    btn.classList.toggle(
+      "active",
+      btn.dataset.view === view && !query
+    );
+  });
+
+  let matches = database;
+
+  if (view === "saved") {
+    matches = database.filter(list => saved.includes(list.id));
+  } else if (view !== "all" && view !== "home") {
+    matches = database.filter(list => list.category === view);
+  }
+
+  if (query) {
+    matches = database.filter(list =>
+      searchable(list).includes(query.toLowerCase())
+    );
+  }
+
+  listTitle.textContent = query
+    ? `Search: ${query}`
+    : view === "saved"
+      ? "Saved Lists"
+      : view === "all"
+        ? "All Lists"
+        : view === "home"
+          ? "All Lists"
+          : view;
+
+  listCount.textContent = `${matches.length} LISTS`;
+
+  if (!matches.length) {
+    results.innerHTML = `
+      <p class="empty">${
+        view === "saved"
+          ? "No saved lists yet. Open a list and tap ☆ to save it."
+          : "No matching lists found. Try another search."
+      }</p>`;
+    return;
+  }
+
+  results.innerHTML = matches.map(list => `
+    <article class="list-item">
+      <div class="item-head" data-expand="${list.id}">
+        <span>${list.icon}</span>
+        <strong>${list.title}</strong>
+        <span class="arrow">＋</span>
+      </div>
+
+      <div class="item-body hidden" id="body-${list.id}">
+        <p>${list.description}</p>
+        <button class="save ${saved.includes(list.id) ? "saved" : ""}"
+          data-save="${list.id}">
+          ${saved.includes(list.id) ? "★ Saved" : "☆ Save list"}
+        </button>
+
+        <ul>
+          ${list.items.map(item => `
+            <li>
+              <strong>${item.name}</strong>
+              <ul>
+                ${item.children.map(child => `
+                  <li>${child}</li>
+                `).join("")}
+              </ul>
+            </li>
+          `).join("")}
+        </ul>
+      </div>
+    </article>
+  `).join("");
+}
+
+document.getElementById("nav").addEventListener("click", event => {
+  const button = event.target.closest("button[data-view]");
+  if (!button) return;
+
+  searchInput.value = "";
+  showView(button.dataset.view);
+});
+
+categories.addEventListener("click", event => {
+  const card = event.target.closest("[data-open]");
+  if (!card) return;
+
+  showView(
+    database.find(list => list.id === card.dataset.open).category
+  );
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+document.getElementById("searchForm").addEventListener(
+  "submit", event => {
+    event.preventDefault();
+
+    const query = searchInput.value.trim();
+
+    if (!query) {
+      showView("home");
+      return;
+    }
+
+    showView("all", query);
+    listView.scrollIntoView({ behavior: "smooth" });
+  }
+);
+
+results.addEventListener("click", event => {
+  const saveButton = event.target.closest("[data-save]");
+
+  if (saveButton) {
+    const id = saveButton.dataset.save;
+
+    saved = saved.includes(id)
+      ? saved.filter(item => item !== id)
+      : [...saved, id];
+
+    saveData();
+    showView(currentView, currentQuery);
+    return;
+  }
+
+  const header = event.target.closest("[data-expand]");
+  if (!header) return;
+
+  const body = document.getElementById(
+    `body-${header.dataset.expand}`
+  );
+
+  body.classList.toggle("hidden");
+
+  header.querySelector(".arrow").textContent =
+    body.classList.contains("hidden") ? "＋" : "−";
+});
+
+renderCategories();
+showView("home");
+</script></body>
+</html>
